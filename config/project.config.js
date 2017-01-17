@@ -10,6 +10,7 @@ debug('Creating default configuration.')
 // ========================================================
 const config = {
   env : process.env.NODE_ENV || 'development',
+  universal: process.env.NODE_UNIVERSAL || true,
 
   // ----------------------------------
   // Project Structure
@@ -82,6 +83,7 @@ config.globals = {
   '__DEV__'      : config.env === 'development',
   '__PROD__'     : config.env === 'production',
   '__TEST__'     : config.env === 'test',
+  '__SERVER__'   : config.universal,
   '__COVERAGE__' : !argv.watch && config.env === 'test',
   '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
 }
