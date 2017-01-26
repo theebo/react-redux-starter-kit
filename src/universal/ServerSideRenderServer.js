@@ -49,7 +49,7 @@ export default function(parameters)
                       <title>React Redux Starter Kit</title>
                       <meta charset="utf-8">
                       <meta name="viewport" content="width=device-width, initial-scale=1">
-                      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+                      <link rel="stylesheet" href="${assets.styles.app}">
                     </header>
                     <body>
                       <div id='root' style='height:100%;'>

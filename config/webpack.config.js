@@ -28,8 +28,8 @@ const APP_ENTRY = project.paths.client('main.js')
 
 webpackConfig.entry = {
   app : __DEV__
-    ? [APP_ENTRY].concat(`webpack-hot-middleware/client?path=${project.compiler_public_path}__webpack_hmr`)
-    : [APP_ENTRY],
+    ? ['bootstrap-loader',APP_ENTRY].concat(`webpack-hot-middleware/client?path=${project.compiler_public_path}__webpack_hmr`)
+    : ['bootstrap-loader',APP_ENTRY],
   vendor : project.compiler_vendors
 }
 
@@ -64,6 +64,10 @@ webpackConfig.plugins = [
     minify   : {
       collapseWhitespace : true
     }
+  }),
+  new webpack.ProvidePlugin({
+    $: "jquery",
+    jQuery: "jquery"
   })
 ]
 
@@ -154,6 +158,11 @@ webpackConfig.module.loaders.push({
   ]
 })
 
+webpackConfig.module.loaders.push({
+  test: /bootstrap-sass\/assets\/javascripts\//,
+  loaders: ['imports?jQuery=jquery']
+})
+
 webpackConfig.sassLoader = {
   includePaths : project.paths.client('styles')
 }
@@ -195,7 +204,7 @@ webpackConfig.module.loaders.push(
 // when we don't know the public path (we know it only when HMR is enabled [in development]) we
 // need to use the extractTextPlugin to fix this issue:
 // http://stackoverflow.com/questions/34133808/webpack-ots-parsing-error-loading-fonts/34133809#34133809
-if (!__DEV__) {
+//if (!__DEV__) {
   debug('Applying ExtractTextPlugin to CSS loaders.')
   webpackConfig.module.loaders.filter((loader) =>
     loader.loaders && loader.loaders.find((name) => /css/.test(name.split('?')[0]))
@@ -211,6 +220,6 @@ if (!__DEV__) {
       allChunks : true
     })
   )
-}
+//}
 
 module.exports = webpackConfig
